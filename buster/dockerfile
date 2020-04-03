@@ -6,7 +6,7 @@ FROM debian:buster-slim
 LABEL maintainer="me@loganhill.nz"
 ARG PUID=1000
 
-ENV STEAMDIR /home/steam/steamcmd
+ENV STEAMDIR /home/steam/steamcmd/
 
 RUN set -x \
         && apt-get update \
@@ -18,6 +18,6 @@ RUN set -x \
 RUN useradd -u $PUID -m steam
 USER steam
 RUN mkdir -p ${STEAMDIR}
-RUN cd ${STEAMDIR} \
+RUN cd ${STEAMDIR}
 WORKDIR ${STEAMDIR}
 VOLUME ${STEAMDIR}
