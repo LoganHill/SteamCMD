@@ -15,7 +15,7 @@ RUN set -x \
 		lib32gcc1=1:8.3.0-6 \
 		wget=1.20.1-1.1 \
 		ca-certificates=20190110
-RUN useradd -u $PUID -m steam -U
+RUN useradd -u $PUID -mU steam
 USER steam
 RUN mkdir -p ${STEAMDIR}
 RUN cd ${STEAMDIR}
