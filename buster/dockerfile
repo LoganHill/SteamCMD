@@ -16,11 +16,10 @@ RUN set -x \
 		wget=1.20.1-1.1 \
 		ca-certificates=20190110
 RUN useradd -u $PUID -m steam
-RUN su steam
-RUN mkdir -p ${STEAMDIR}
-RUN cd ${STEAMDIR}
-RUN wget -qO- 'https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz' | tar zxf -
-RUN exit
+RUN su steam -c \
+		"mkdir -p ${STEAMCMDDIR} \
+		&& cd ${STEAMCMDDIR} \
+		&& wget -qO- 'https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz' | tar zxf -" \
 RUN apt-get clean autoclean
 RUN apt-get autoremove -y
 
