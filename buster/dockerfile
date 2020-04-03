@@ -1,0 +1,29 @@
+##############################################
+#   Dockerfile to deploy base steamcmd img   #
+##############################################
+
+FROM debian:buster-slim
+LABEL maintainer="me@loganhill.nz"
+ARG PUID=1000
+
+ENV STEAMDIR /home/steam/steamcmd
+
+RUN set -x \
+        && apt-get update \
+        && apt-get install -y --no-install-recommends --no-install-suggests \
+		lib32stdc++6=8.3.0-6 \
+		lib32gcc1=1:8.3.0-6 \
+		wget=1.20.1-1.1 \
+		ca-certificates=20190110
+RUN useradd -u $PUID -m steam
+RUN su steam -c
+RUN mkdir -p ${STEAMDIR}
+RUN cd ${STEAMDIR}
+RUN wget -qO- 'https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz' | tar zxf -
+RUN exit
+RUN apt clean autoclean
+RUN apt autoremove -y
+
+USER steam
+WORKDIR ${STEAMDIR}
+VOLUME ${STEAMDIR}
